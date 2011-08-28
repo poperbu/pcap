@@ -1,0 +1,183 @@
+#N canvas 656 203 986 935 12;
+#X obj 206 395 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 206 276 tgl 15 0 empty empty loop 17 7 0 10 -260097 -1 -1 0
+1;
+#X text 491 488 2-Packet number (float).;
+#X text 206 253 Loop mode->continuous capturing.;
+#X text 454 -11 libpcap is needed to run this object.-> http://tcpdump.org
+;
+#X obj 48 396 tgl 15 0 empty empty empty -8 0 0 8 -4034 -1 -1 0 1;
+#X symbolatom 187 829 0 0 0 0 10:data_hex out10 -;
+#X obj 174 444 s out9;
+#X obj 190 416 s out10;
+#X text 492 530 4-Protocol (symbol).;
+#X text 491 509 3-Ethernet info (protocol \, mac adresses \, ...).(symbol)
+;
+#X text 491 549 5-Source IP Adress (symbpol).;
+#X text 492 573 6-Destination IP Adress (symbol).;
+#X text 492 598 7-Source Port number(float);
+#X text 492 620 8-Destination Port number(float);
+#X text 493 667 10-Data bytes in hexadecimal (symbol);
+#X text 494 691 11-Bangs when a captured packet process finished.;
+#X text 493 643 9-Packet Header (id \, ttl \, ...)(symbol);
+#X symbolatom 185 748 0 0 0 0 9:PacketHeader out9 -;
+#X floatatom 65 642 0 0 0 0 - - -;
+#X symbolatom 79 613 0 0 0 0 - - -;
+#X symbolatom 95 588 0 0 0 0 - - -;
+#X symbolatom 111 558 0 0 0 0 - - -;
+#X symbolatom 127 527 0 0 0 0 - - -;
+#X floatatom 158 469 0 0 0 0 - - -;
+#X floatatom 142 498 0 0 0 0 - - -;
+#X obj -22 308 r inlet1;
+#N canvas 951 423 721 566 inputs_help 0;
+#X msg 118 59 reset;
+#X msg 193 97 debug \$1;
+#X obj 193 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 196 260 packets \$1;
+#X text 250 309 Timeout to wait for a packet (milisec).(default 500)
+;
+#X msg 188 45 info;
+#X floatatom 196 231 5 1 100 0 - - -;
+#X text 219 69 Debug mode in console. (default 0);
+#X floatatom 200 311 5 1 1000 0 - - -;
+#X msg 200 335 timeout \$1;
+#X floatatom 205 384 5 1 1000 0 - - -;
+#X msg 205 409 delay \$1;
+#X text 257 381 delay between captures(to avoid pd watchdog) (default
+100ms);
+#X floatatom 192 147 5 0 0 0 - - -;
+#X msg 192 176 data \$1;
+#X text 249 127 Max num of bytes of data to output. Be careful!! (default
+0);
+#X text 246 150 if it is > than 0 \, the payload out is on \, else
+is off.;
+#X text 252 169 It can lock pd->modify the delay value if you want
+to out data.;
+#X obj 120 458 s inlet1;
+#X text 245 228 Number of packet to capture by each capture(default
+1).;
+#X text 229 39 shows info.;
+#X text 61 31 Reset all values;
+#X connect 0 0 18 0;
+#X connect 1 0 18 0;
+#X connect 2 0 1 0;
+#X connect 3 0 18 0;
+#X connect 5 0 18 0;
+#X connect 6 0 3 0;
+#X connect 8 0 9 0;
+#X connect 9 0 18 0;
+#X connect 10 0 11 0;
+#X connect 11 0 18 0;
+#X connect 13 0 14 0;
+#X connect 14 0 18 0;
+#X restore 470 127 pd inputs_help;
+#X obj 473 281 s inlet1;
+#X text 487 232 disable dump option;
+#X obj 49 -19 cnv 15 380 50 empty empty PD_network_sniffer_with_pcaplib_(tcpdump)
+10 35 0 11 -99865 -262144 0;
+#X obj 49 30 cnv 15 380 20 empty empty Jordi_Sala_2010_(poperbu@gmail.com)
+80 8 0 8 -99865 -228856 0;
+#X obj 49 51 cnv 15 380 20 empty empty http://musa.poperbu.net/puredata
+80 8 0 8 -99865 -228856 0;
+#X obj 50 140 cnv 15 20 15 empty empty 1- 2 8 0 10 -260097 -1 0;
+#X obj 129 188 cnv 15 20 15 empty empty 2- 2 8 0 10 -260097 -1 0;
+#X obj 225 360 cnv 15 80 15 empty empty Argument1 2 8 0 10 -260097
+-1 0;
+#N canvas 1150 265 761 469 pcap_filter 0;
+#X msg 132 124 filter udp;
+#X msg 135 213 filter host 192.168.0.1;
+#X msg 130 250 filter tcp port 80;
+#X text 124 101 captures only udp packets:;
+#X text 133 150 captures only tcp packets:;
+#X text 316 201 captures only packets containing host with adress 192.168.0.1:
+;
+#X text 17 45 Some basic examples:;
+#X text 382 5 The filter message allows to filter packets with libcap-tcpdump
+filter expressions.;
+#X msg 135 303 filter tcp dst port 80;
+#X msg 134 364 filter tcp dst port 80 and dst host www.google.com;
+#X text 134 340 captures only traffic with destination www.google.com:80
+;
+#X msg 131 173 filter tcp and udp;
+#X text 131 277 captures only tcp packets with destination port 80
+;
+#X text 269 250 captures only tcp packets that use port 80;
+#X text 378 38 For more info-> man tcpdump or http://www.tcpdump.org
+;
+#X obj 23 426 s inlet1;
+#X text 93 27 default:no filter;
+#X text 28 14 Pcap filter expressions;
+#X text 64 60 captures only tcp packets:;
+#X msg 72 83 filter tcp;
+#X connect 0 0 15 0;
+#X connect 1 0 15 0;
+#X connect 2 0 15 0;
+#X connect 8 0 15 0;
+#X connect 9 0 15 0;
+#X connect 11 0 15 0;
+#X connect 19 0 15 0;
+#X restore 472 155 pd pcap_filter;
+#X text 573 125 -> GENERAL settings and options;
+#X text 577 154 ->Pcap traffic FILTER;
+#X text 471 187 DUMP packets captured in a PCAP FILE;
+#X obj 493 447 cnv 15 60 15 empty empty outlets 2 8 0 10 -260097 -1
+0;
+#X obj 722 245 openpanel;
+#X obj 722 223 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 831 243 openpanel;
+#X obj 831 221 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 774 309 s inlet1;
+#X text 53 71 OSX adaptation: Nicolas Montgermont (nim.on.free.fr)
+;
+#X text 747 191 PCAP FILES;
+#X text 740 218 read;
+#X text 851 215 dump;
+#X msg 131 205 capture;
+#X msg 134 253 close;
+#X text 135 232 close file;
+#X obj 59 -15 cnv 15 300 20 empty empty pcap_for_pd_0.0.5-PCAP_FILE
+10 11 0 12 -260097 -1 0;
+#X text 309 357 -> pcap file to read;
+#X text 78 136 Open pcap file to read;
+#X text 151 183 Start capture packet process.;
+#X obj 48 360 pcap_file readfile.pcap;
+#X text 490 468 1-STATUS: file opened for readeing / no file open.
+;
+#X obj 112 208 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 111 158 read readfile.pcap;
+#X msg 485 254 dump;
+#X msg 473 210 dump dumpfile.pcap;
+#X msg 722 274 read \$1;
+#X msg 831 272 dump \$1;
+#X msg 64 158 read;
+#X connect 1 0 57 1;
+#X connect 26 0 57 0;
+#X connect 41 0 63 0;
+#X connect 42 0 41 0;
+#X connect 43 0 64 0;
+#X connect 44 0 43 0;
+#X connect 50 0 57 0;
+#X connect 51 0 57 0;
+#X connect 57 0 5 0;
+#X connect 57 1 19 0;
+#X connect 57 2 20 0;
+#X connect 57 3 21 0;
+#X connect 57 4 22 0;
+#X connect 57 5 23 0;
+#X connect 57 6 25 0;
+#X connect 57 7 24 0;
+#X connect 57 8 7 0;
+#X connect 57 9 8 0;
+#X connect 57 10 0 0;
+#X connect 59 0 57 0;
+#X connect 60 0 57 0;
+#X connect 61 0 28 0;
+#X connect 62 0 28 0;
+#X connect 63 0 45 0;
+#X connect 64 0 45 0;
+#X connect 65 0 57 0;

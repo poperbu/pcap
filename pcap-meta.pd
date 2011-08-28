@@ -1,0 +1,9 @@
+#N canvas 18 124 200 200 10;
+#N canvas 28 124 420 300 META 0;
+#X text 16 135 LICENSE GNU GPL;
+#X text 14 71 AUTHOR Jordi Sala (poperbu@gmail.com);
+#X text 14 91 DESCRIPTION pdpcap is a network sniffer for Pure Data.
+It uses pcaplib (tcpdump) to do it.;
+#X text 10 10 VERSION 0.0.5;
+#X text 13 41 NAME pcap (for pd);
+#X restore 10 10 pd META;

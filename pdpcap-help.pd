@@ -1,0 +1,224 @@
+#N canvas 832 201 986 935 12;
+#X msg 79 160 connect;
+#X msg 161 267 disconnect;
+#X obj 153 437 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 166 210 capture;
+#X obj 153 320 tgl 15 0 empty empty loop 17 7 0 10 -260097 -1 -1 0
+1;
+#X text 96 134 Connect device;
+#X text 529 618 2-Packet number (float).;
+#X text 153 297 Loop mode->continuous capturing.;
+#X text 497 229 libpcap is needed to run this object.-> http://tcpdump.org
+;
+#X text 186 188 Start capture process.;
+#X obj 71 437 tgl 15 0 empty empty empty -8 0 0 8 -4034 -1 -1 0 1;
+#X symbolatom 187 829 0 0 0 0 10:data_hex out10 -;
+#X obj 138 518 s out9;
+#X obj 145 495 s out10;
+#X text 530 660 4-Protocol (symbol).;
+#X text 529 639 3-Ethernet info (protocol \, mac adresses \, ...).(symbol)
+;
+#X text 529 679 5-Source IP Adress (symbpol).;
+#X text 530 703 6-Destination IP Adress (symbol).;
+#X text 530 728 7-Source Port number(float);
+#X text 530 750 8-Destination Port number(float);
+#X text 531 797 10-Data bytes in hexadecimal (symbol);
+#X text 532 821 11-Bangs when a captured packet process finished.;
+#X text 531 773 9-Packet Header (id \, ttl \, ...)(symbol);
+#X symbolatom 185 748 0 0 0 0 9:PacketHeader out9 -;
+#X floatatom 86 687 0 0 0 0 - - -;
+#X symbolatom 93 661 0 0 0 0 - - -;
+#X symbolatom 101 637 0 0 0 0 - - -;
+#X symbolatom 108 613 0 0 0 0 - - -;
+#X symbolatom 116 589 0 0 0 0 - - -;
+#X floatatom 130 541 0 0 0 0 - - -;
+#X floatatom 123 565 0 0 0 0 - - -;
+#X obj 15 298 r inlet1;
+#N canvas 807 378 733 449 devices_help 0;
+#X msg 103 183 device eth0;
+#X msg 105 292 device;
+#X msg 103 237 device wlan0;
+#X msg 105 265 device lo;
+#X msg 104 209 device eth1;
+#X obj 51 401 s inlet1;
+#X msg 51 53 device_list;
+#X msg 80 132 device_num \$1;
+#X obj 80 112 hradio 15 1 0 12 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X text 300 155 arg1 is the devicename. But the arg1 is not mandatory.
+You can specify or change the device by sending a "device dev_name"
+message \, or "device_num num_of_device" message.;
+#X text 72 88 select device by number;
+#X text 102 160 select device by name;
+#X text 47 23 reload and show systems devices;
+#X msg 153 349 device_info;
+#X text 151 326 show basic infor about selected device;
+#X text 301 211 If no device is defined \, pdpcap will look for the
+default device (the first one of device_list).;
+#X connect 0 0 5 0;
+#X connect 1 0 5 0;
+#X connect 2 0 5 0;
+#X connect 3 0 5 0;
+#X connect 4 0 5 0;
+#X connect 6 0 5 0;
+#X connect 7 0 5 0;
+#X connect 8 0 7 0;
+#X connect 13 0 5 0;
+#X restore 508 287 pd devices_help;
+#N canvas 949 373 721 566 inputs_help 0;
+#X msg 118 59 reset;
+#X msg 193 97 debug \$1;
+#X obj 193 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 196 260 packets \$1;
+#X text 250 309 Timeout to wait for a packet (milisec).(default 500)
+;
+#X msg 188 45 info;
+#X floatatom 196 231 5 1 100 0 - - -;
+#X text 219 69 Debug mode in console. (default 0);
+#X floatatom 200 311 5 1 1000 0 - - -;
+#X msg 200 335 timeout \$1;
+#X floatatom 205 384 5 1 1000 0 - - -;
+#X msg 205 409 delay \$1;
+#X text 257 381 delay between captures(to avoid pd watchdog) (default
+100ms);
+#X floatatom 192 147 5 0 0 0 - - -;
+#X msg 192 176 data \$1;
+#X text 249 127 Max num of bytes of data to output. Be careful!! (default
+0);
+#X text 246 150 if it is > than 0 \, the payload out is on \, else
+is off.;
+#X text 252 169 It can lock pd->modify the delay value if you want
+to out data.;
+#X obj 120 458 s inlet1;
+#X text 245 228 Number of packet to capture by each capture(default
+1).;
+#X text 229 39 shows info.;
+#X text 61 31 Reset all values;
+#X connect 0 0 18 0;
+#X connect 1 0 18 0;
+#X connect 2 0 1 0;
+#X connect 3 0 18 0;
+#X connect 5 0 18 0;
+#X connect 6 0 3 0;
+#X connect 8 0 9 0;
+#X connect 9 0 18 0;
+#X connect 10 0 11 0;
+#X connect 11 0 18 0;
+#X connect 13 0 14 0;
+#X connect 14 0 18 0;
+#X restore 508 257 pd inputs_help;
+#X obj 79 379 pdpcap eth0;
+#X msg 523 413 file_dump;
+#X text 528 598 1-STATUS: connected or reading file 1 / disconnected0.
+;
+#X text 204 134 or read pcap file;
+#X text 162 246 Disconnect device (end capture session).;
+#X obj 511 440 s inlet1;
+#X text 525 391 disable dump option;
+#X obj 49 -19 cnv 15 380 50 empty empty PD_network_sniffer_with_pcaplib_(tcpdump)
+10 35 0 11 -99865 -262144 0;
+#X obj 164 -19 cnv 15 140 20 empty empty PDPCAP_0.0.4 10 12 0 12 -260097
+-1 0;
+#X obj 49 30 cnv 15 380 20 empty empty Jordi_Sala_2010_(poperbu@gmail.com)
+80 8 0 8 -99865 -228856 0;
+#X obj 49 51 cnv 15 380 20 empty empty http://musa.poperbu.net/puredata
+80 8 0 8 -99865 -228856 0;
+#X obj 73 138 cnv 15 20 15 empty empty 1- 2 8 0 10 -260097 -1 0;
+#X obj 164 193 cnv 15 20 15 empty empty 2- 2 8 0 10 -260097 -1 0;
+#X obj 160 382 cnv 15 80 15 empty empty Argument1 2 8 0 10 -260097
+-1 0;
+#X text 240 377 -> device name (Ex: eth0 \, eth1 \, lo).;
+#X msg 511 369 file_dump dumpfile.pcap;
+#X msg 149 160 file_read readfile.pcap;
+#N canvas 1150 265 761 469 pcap_filter 0;
+#X msg 132 124 filter udp;
+#X msg 135 213 filter host 192.168.0.1;
+#X msg 130 250 filter tcp port 80;
+#X text 124 101 captures only udp packets:;
+#X text 133 150 captures only tcp packets:;
+#X text 316 201 captures only packets containing host with adress 192.168.0.1:
+;
+#X text 17 45 Some basic examples:;
+#X text 382 5 The filter message allows to filter packets with libcap-tcpdump
+filter expressions.;
+#X msg 135 303 filter tcp dst port 80;
+#X msg 134 364 filter tcp dst port 80 and dst host www.google.com;
+#X text 134 340 captures only traffic with destination www.google.com:80
+;
+#X msg 131 173 filter tcp and udp;
+#X text 131 277 captures only tcp packets with destination port 80
+;
+#X text 269 250 captures only tcp packets that use port 80;
+#X text 378 38 For more info-> man tcpdump or http://www.tcpdump.org
+;
+#X obj 23 426 s inlet1;
+#X text 93 27 default:no filter;
+#X text 28 14 Pcap filter expressions;
+#X text 64 60 captures only tcp packets:;
+#X msg 72 83 filter tcp;
+#X connect 0 0 15 0;
+#X connect 1 0 15 0;
+#X connect 2 0 15 0;
+#X connect 8 0 15 0;
+#X connect 9 0 15 0;
+#X connect 11 0 15 0;
+#X connect 19 0 15 0;
+#X restore 509 316 pd pcap_filter;
+#X text 611 255 -> GENERAL settings and options;
+#X text 618 286 -> DEVICES settings and options;
+#X text 614 315 ->Pcap traffic FILTER;
+#X text 509 346 DUMP packets captured in a PCAP FILE;
+#X obj 531 577 cnv 15 60 15 empty empty outlets 2 8 0 10 -260097 -1
+0;
+#X obj 751 427 openpanel;
+#X obj 751 405 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 751 456 file_read \$1;
+#X obj 860 425 openpanel;
+#X obj 860 403 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 860 454 file_dump \$1;
+#X obj 803 491 s inlet1;
+#X text 563 190 ->In OSX \, change permisions of net device: ex chmod
+a+r /dev/bpf*;
+#X text 560 172 ->You need to run as root in GNU/linux for live capture.
+;
+#X text 484 171 IMPORTANT:;
+#X text 53 71 OSX adaptation: Nicolas Montgermont (nim.on.free.fr)
+;
+#X text 776 373 PCAP FILES;
+#X text 769 400 read;
+#X text 880 397 dump;
+#X obj 442 -11 cnv 15 140 20 empty empty DEPRECATED 10 12 0 12 -258113
+-262144 0;
+#X text 450 11 pdpcap has been renamed to pcap and splited into 2 objects:
+;
+#X obj 455 65 pcap_file;
+#X obj 455 40 pcap_device;
+#X connect 0 0 34 0;
+#X connect 1 0 34 0;
+#X connect 3 0 34 0;
+#X connect 4 0 34 1;
+#X connect 31 0 34 0;
+#X connect 34 0 10 0;
+#X connect 34 1 24 0;
+#X connect 34 2 25 0;
+#X connect 34 3 26 0;
+#X connect 34 4 27 0;
+#X connect 34 5 28 0;
+#X connect 34 6 30 0;
+#X connect 34 7 29 0;
+#X connect 34 8 12 0;
+#X connect 34 9 13 0;
+#X connect 34 10 2 0;
+#X connect 35 0 39 0;
+#X connect 49 0 39 0;
+#X connect 50 0 34 0;
+#X connect 57 0 59 0;
+#X connect 58 0 57 0;
+#X connect 59 0 63 0;
+#X connect 60 0 62 0;
+#X connect 61 0 60 0;
+#X connect 62 0 63 0;

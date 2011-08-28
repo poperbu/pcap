@@ -1,0 +1,5 @@
+pdpcap (0.0.2) unstable; urgency=low
+ 
+   * New pdpcap release with some of bug fixes and feature improvements.
+
+ -- Jordi Sala <jordi@poperbu.net>  Sat,  22 May 2010 22:38:49 -0700

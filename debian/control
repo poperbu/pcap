@@ -1,0 +1,18 @@
+Source: pd-pdpcap
+Section: sound network
+Priority: optional
+Maintainer: Jordi Sala <jordi@poperbu.net>
+XSBC-Original-Maintainer: Jordi Sala<jordi@poperbu.net>
+Build-Depends: debhelper (>= 7.0.50~), puredata (>= 0.42.5-3.1~), libpcap0.8-dev (>= 1.0.0-6)
+Standards-Version: 3.8.3
+Homepage: http://musa.poperbu.net/puredata
+
+Package: pd-pdpcap
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpcap
+Description: Pure Data Network sniffer.
+ pdpcap is a pure data network sniffer. It uses pcaplib
+ (http://www.tcpdump.org) to capture and analisys the
+ network traffic.
+ For more info: http://musa.poperbu.net
+	

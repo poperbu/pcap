@@ -1,0 +1,36 @@
+#N canvas 522 276 750 825 10;
+#X text 353 475 2-Packet number (float).;
+#X symbolatom 150 656 0 0 0 0 10:data_hex out10 -;
+#X obj 239 295 s out9;
+#X obj 262 272 s out10;
+#X text 350 419 4-Protocol (symbol).;
+#X text 420 443 3-Ethernet info (protocol \, mac adresses \, ...).(symbol)
+;
+#X text 352 391 5-Source IP Adress (symbpol).;
+#X text 351 362 6-Destination IP Adress (symbol).;
+#X text 352 340 7-Source Port number(float);
+#X text 352 316 8-Destination Port number(float);
+#X text 351 272 10-Data bytes in hexadecimal (symbol);
+#X text 353 248 11-Bangs when a captured packet process finished.;
+#X text 350 296 9-Packet Header (id \, ttl \, ...)(symbol);
+#X symbolatom 148 575 0 0 0 0 9:PacketHeader out9 -;
+#X floatatom 76 466 0 0 0 0 - - -;
+#X symbolatom 99 443 0 0 0 0 - - -;
+#X symbolatom 122 417 0 0 0 0 - - -;
+#X symbolatom 146 392 0 0 0 0 - - -;
+#X symbolatom 169 367 0 0 0 0 - - -;
+#X floatatom 216 316 0 0 0 0 - - -;
+#X floatatom 192 338 0 0 0 0 - - -;
+#X obj 286 250 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 53 23 pcap_control2 1;
+#X connect 22 1 14 0;
+#X connect 22 2 15 0;
+#X connect 22 3 16 0;
+#X connect 22 4 17 0;
+#X connect 22 5 18 0;
+#X connect 22 6 20 0;
+#X connect 22 7 19 0;
+#X connect 22 8 2 0;
+#X connect 22 9 3 0;
+#X connect 22 10 21 0;
