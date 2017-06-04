@@ -930,7 +930,28 @@ void pdpcap_info(t_pdpcap *x)
     post("pdpcap:   OTHERS: %d", x->x_unk_count);
 
 }
+//select device to capture by number id
+void pdpcap_device_num(t_pdpcap *x, t_floatarg f)
+{
+        int num = 0;
+        pcap_if_t* d;
+        x->x_default_dev=0;
+        for(d=x->x_all_devs; d; d=d->next) {
+            if(num==f){
+                x->x_dev=d->name;
+                post("pdpcap: Device %d: %s selected.", num, x->x_dev);
+                x->x_default_dev=1;
+            }
+            num++;
+        }
 
+        if (x->x_default_dev==0){
+                error("pdpcap: Device %d doesn't exist.",num);
+                //post("pdpcap: No device selected");
+                x->x_dev=NULL;
+        }
+        pdpcap_device_net_info(x);
+}
 void pdpcap_tick(t_pdpcap *x)
 {
   pdpcap_capture(x);
@@ -1013,30 +1034,6 @@ void pdpcap_device_find(t_pdpcap *x){
         return;
     }
 }
-
-//select device to capture by number id
-void pdpcap_device_num(t_pdpcap *x, t_floatarg f)
-{
-        int num = 0;
-        pcap_if_t* d;
-        x->x_default_dev=0;
-        for(d=x->x_all_devs; d; d=d->next) {
-            if(num==f){
-                x->x_dev=d->name;
-                post("pdpcap: Device %d: %s selected.", num, x->x_dev);
-                x->x_default_dev=1;
-            }
-            num++;
-        }
-
-        if (x->x_default_dev==0){
-                error("pdpcap: Device %d doesn't exist.",num);
-                //post("pdpcap: No device selected");
-                x->x_dev=NULL;
-        }
-        pdpcap_device_net_info(x);
-}
-
 //show selected device basic info
 void pdpcap_device_info(t_pdpcap *x)
 {
